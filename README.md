@@ -1,10 +1,7 @@
 <h1>Data Processing with HubSpot API</h1>
         <h2>Features</h2>
         <ul>
-            <li>Fetch data from a specified API endpoint.</li>
-            <li>Process the fetched data according to predefined rules.</li>
-            <li>Export the processed data to an Excel spreadsheet.</li>
-            <li>Customizable settings via a <code>config.json</code> file.</li>
+            <li>Fetch Contact and Company data from a HubSpot list, Format the data and export to an Excel spreadsheet.</li>
         </ul>
         <h2>Getting Started</h2>
         <ol>
