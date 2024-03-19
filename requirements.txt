@@ -1,0 +1,5 @@
+hubspot
+requests
+pandas
+numpy
+json
