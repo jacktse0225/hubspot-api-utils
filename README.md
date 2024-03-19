@@ -1,4 +1,4 @@
-<h1>Data Processing and Export Script</h1>
+<h1>Data Processing with HubSpot API</h1>
         <h2>Features</h2>
         <ul>
             <li>Fetch data from a specified API endpoint.</li>
@@ -27,7 +27,4 @@
             </li>
             <li>Once the script finishes running, you will find the exported Excel spreadsheet in the specified directory.</li>
         </ol>
-        <h2>Contributing</h2>
-        <p>Contributions are welcome! Feel free to submit pull requests or open issues if you encounter any bugs or have suggestions for improvements.</p>
-        <h2>License</h2>
-        <p>This project is licensed under the <a href="LICENSE">MIT License</a>.</p>
+
