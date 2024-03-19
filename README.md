@@ -12,7 +12,7 @@
             <li>Install the required dependencies by running:
                 <pre><code>pip install -r requirements.txt</code></pre>
             </li>
-            <li>Create a <code>config.json</code> file in the root directory of the project with the following structure:
+            <li>Create a <code>config.json</code> file in the \general directory of the project with the following structure:
                 <pre><code>{
     "sandbox_api": "YOUR_SANDBOX_API_KEY",
     "production_api": "YOUR_PRODUCTION_API_KEY",
