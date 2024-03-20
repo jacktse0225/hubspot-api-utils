@@ -406,3 +406,29 @@ def get_company_info_as_list(company_id_list, client, company_properties):
     for dict in company_list:
         company.append(dict.properties)
     return company
+
+def init_platform_api_directory():
+    platform = input("sandbox or production: ")
+    if platform == "":
+        platform = "production"
+    api, directory = reading_json_getting_api_and_save_directory(platform)
+    headers = {
+        'accept': "application/json",
+        'content-type': "application/json",
+        'authorization': f"Bearer {api}"
+    }
+    return platform, api, directory, headers
+
+def create_batch_of_objects(object, parameters, platform, headers):
+    if object not in object_type_for_properties.get(platform):
+        print(f"{object} is not found")
+        return sys.exit()
+    url = "https://api.hubapi.com/contacts/v1/contact/batch"
+    result = requests.post(url, data=parameters, headers=headers)
+    return result.status_code
+
+def return_status_code(status_code):
+    if status_code in [200,202]:
+        print("Data is successfully imported!")
+    else:
+        print("Data Import is failed")

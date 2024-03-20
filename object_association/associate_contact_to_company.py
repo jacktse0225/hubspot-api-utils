@@ -10,6 +10,7 @@ from datetime import datetime
     Press Enter to confirm the association or Input N to stop association
     A report will be generated as an Excel spreadsheet to show all Contacts associated and not associated
 """
+
 def main():
     ##Input
     platform = input("sandbox or production: ")
