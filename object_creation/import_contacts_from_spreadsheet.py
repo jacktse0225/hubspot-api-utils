@@ -64,10 +64,10 @@ def create_property_for_parameter(df):
 
 def main():
     platform, api, directory, headers = init_platform_api_directory()
-
+    file_type = input("xlsx or csv: ")
     ##Input Files
-    file_path = getting_file_path(directory, True, "xlsx")
-    df = files_to_df(file_path, "xlsx")
+    file_path = getting_file_path(directory, True, file_type)
+    df = files_to_df(file_path, file_type)
 
     ##Data Cleaning
     column_rename = {
