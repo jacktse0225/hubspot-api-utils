@@ -1,4 +1,3 @@
-import json
 import sys
 import numpy as np
 import pandas as pd
@@ -10,13 +9,6 @@ import re
 def validate_email(email):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
     return re.fullmatch(regex, email) is not None
-def check_text_columns(df):
-    for column in text_columns:
-        # Check for unexpected or invalid values
-        invalid_values = df[~df[column].str.isalnum()]
-        if not invalid_values.empty:
-            print(f"Warning: Invalid values found in {column}: {invalid_values}")
-            sys.exit()
 
 def website_to_domain(website):
     to_remove = 'http://www.'
