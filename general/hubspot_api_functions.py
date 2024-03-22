@@ -4,7 +4,10 @@ import pandas as pd
 import numpy as np
 import json
 import sys
+import hubspot
 from hubspot.crm.contacts import BatchReadInputSimplePublicObjectId, ApiException
+from hubspot.crm.companies import BatchInputSimplePublicObjectInputForCreate, ApiException
+from pprint import pprint
 import os
 
 hs_objecttype_and_obejctid = {"production":{"contact":"contact","company":"companies", "conference_role":"2-5487873", "conference":"2-5436849",
@@ -417,18 +420,44 @@ def init_platform_api_directory():
         'content-type': "application/json",
         'authorization': f"Bearer {api}"
     }
-    return platform, api, directory, headers
+    client = hubspot.Client.create(access_token=api)
+    return platform, api, directory, headers, client
 
-def create_batch_of_objects(object, parameters, platform, headers):
-    if object not in object_type_for_properties.get(platform):
-        print(f"{object} is not found")
-        return sys.exit()
-    url = "https://api.hubapi.com/contacts/v1/contact/batch"
-    result = requests.post(url, data=parameters, headers=headers)
-    return result.status_code
+def create_batch_of_companies(client, parameters):
+    result = []
+    batches = []
+    for i in range(0, len(parameters), 100):
+        batch = parameters[i:i + 100]
+        batches.append(batch)
+    for batch in batches:
+        batch_input_simple_public_object_input_for_create = BatchInputSimplePublicObjectInputForCreate(inputs=batch)
+        api_response = client.crm.companies.batch_api.create(batch_input_simple_public_object_input_for_create=batch_input_simple_public_object_input_for_create)
+        result.append(api_response.to_dict())
+    return result
+
+def create_batch_of_contacts(client, parameters):
+    result = []
+    batches = []
+    for i in range(0, len(parameters), 100):
+        batch = parameters[i:i + 100]
+        batches.append(batch)
+    for batch in batches:
+        batch_input_simple_public_object_input_for_create = BatchInputSimplePublicObjectInputForCreate(inputs=batch)
+        api_response = client.crm.contacts.batch_api.create(batch_input_simple_public_object_input_for_create=batch_input_simple_public_object_input_for_create)
+        result.append(api_response.to_dict())
+    return result
 
 def return_status_code(status_code):
     if status_code in [200,202]:
         print("Data is successfully imported!")
     else:
         print("Data Import is failed")
+
+# def mapping_industry_label_to_value(industry):
+def get_property_values_from_object_v3(client, platform, object_type, property_name):
+    if object_type not in object_type_for_properties.get(platform):
+        print(f"{object_type} is not found")
+        return sys.exit()
+    object_type = object_type_for_properties.get(platform).get(object_type)
+    api_response = client.crm.properties.core_api.get_by_name(object_type=object_type, property_name=property_name, archived=False).to_dict()
+    return api_response

@@ -81,7 +81,7 @@ def create_excel_writer(file_name, backup, save_directory):
     save_file = os.path.join(save_directory, f"{file_name}.xlsx")
     if backup:
         now = datetime.now()
-        save_file = os.path.join(save_directory, f"{file_name}-{now.hour}-{now.minute}.xlsx")
+        save_file = os.path.join(save_directory, f"{file_name}-{now.hour}-{now.minute}-{now.second}.xlsx")
     writer = pd.ExcelWriter(save_file, engine='xlsxwriter')
     return writer
 
