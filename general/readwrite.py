@@ -26,21 +26,21 @@ def getting_file_name(file_paths):
     file_name = file_name.split(".",1)[0]
     return file_name
 
-def getting_file_path(directory, multiple=False, file_type=None):
+def getting_file_path(directory, title, multiple=False, file_type=None):
     root = tk.Tk()
     root.withdraw()
     file_type_dict = {"csv":(("CSV files", "*.csv"), ("All files", "*.*")), "any":"", "xlsx":(("XLSX files", "*.xlsx"), ("All files", "*.*"))}
     if multiple:
         file_path = filedialog.askopenfilenames(
             initialdir=directory,
-            title="Select Files",
+            title=title,
             filetypes=file_type_dict.get(file_type),
             multiple=True
         )
     else:
         file_path = filedialog.askopenfilename(
             initialdir=directory,
-            title="Select Files",
+            title=title,
             filetypes=file_type_dict.get(file_type),
             multiple=False
         )
@@ -90,6 +90,10 @@ def create_excel_writer(file_name, backup, save_directory):
 def excel_write_and_save(writer, df, sheet_name):
     df.to_excel(writer, sheet_name=f'{sheet_name}', index=False)
     sheet = writer.sheets[f'{sheet_name}']
-    sheet.autofit()
+    try:
+        sheet.autofit()
+    except:
+        print(f"{sheet_name} Autofit Failed")
+
 
 
