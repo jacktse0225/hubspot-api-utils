@@ -75,10 +75,11 @@ def paid_title_formatting(writer, df, year_column):
     df.columns = df.columns.str.replace("_", " ")
     df_columns = df.columns.to_list()
     df.columns = [x.capitalize() for x in df_columns]
-    excel_write_and_save(writer, df, "Paid Contact")
+    excel_write_and_save(writer, df, "Paid Title")
     return df
 
 def comp_company_formatting(writer, df, year_column):
+    # df = df.rename(columns = {"City":"city_company", "Country/Region":"country/region_company", "City.1":"City", "Country/Region.1":"Country/Region"})
     df.columns = [x.lower() for x in df.columns]
     df.columns = [x.replace(' ', '_') for x in df.columns]
     df["annual_revenue"] = df["annual_revenue"].replace('(No value)', 0).astype(float)
@@ -123,6 +124,8 @@ def comp_company_formatting(writer, df, year_column):
     return df
 
 def comp_title_formatting(writer, df, year_column):
+    # df = df.rename(columns={"City": "city_company", "Country/Region": "country/region_company", "City.1": "City",
+    #                         "Country/Region.1": "Country/Region"})
     df.columns = [x.lower() for x in df.columns]
     df.columns = [x.replace(' ', '_') for x in df.columns]
     df["annual_revenue"] = df["annual_revenue"].replace('(No value)', 0).astype(float)
@@ -244,7 +247,8 @@ def company_compilation_formatting(writer, paid_company, comp_company):
     paid_company["number_of_employees"] = paid_company["number_of_employees"].replace('(No value)', 0).astype(float)
     paid_company["year"] = '20' + paid_company["conference_code"].astype(str).str[1:3]
     paid_company["type"] = "paid"
-
+    comp_company = comp_company.rename(columns={"City": "city_company", "Country/Region": "country/region_company", "City.1": "City",
+                            "Country/Region.1": "Country/Region"})
     comp_company.columns = [x.lower() for x in comp_company.columns]
     comp_company.columns = [x.replace(' ', '_') for x in comp_company.columns]
     comp_company["annual_revenue"] = comp_company["annual_revenue"].replace('(No value)', 0).astype(float)
@@ -252,7 +256,6 @@ def company_compilation_formatting(writer, paid_company, comp_company):
     comp_company["year"] = '20' + comp_company["conference_code"].astype(str).str[1:3]
     comp_company["type"] = "comp"
     company_compilation = pd.concat([comp_company, paid_company], ignore_index=True)
-
     company_compilation_col = ['company_name', 'industry', 'city_company', 'country/region_company',
                                'annual_revenue', 'number_of_employees', "conference_code", "year", "type", "company_id"]
     company_compilation = company_compilation[company_compilation_col]
