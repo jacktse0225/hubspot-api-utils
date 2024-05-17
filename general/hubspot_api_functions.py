@@ -7,6 +7,8 @@ import sys
 import hubspot
 from hubspot.crm.contacts import BatchReadInputSimplePublicObjectId, ApiException
 from hubspot.crm.companies import BatchInputSimplePublicObjectInputForCreate, ApiException
+from hubspot.crm.lists import ListSearchRequest, ApiException, ListCreateRequest
+
 from pprint import pprint
 import os
 
@@ -461,3 +463,20 @@ def get_property_values_from_object_v3(client, platform, object_type, property_n
     object_type = object_type_for_properties.get(platform).get(object_type)
     api_response = client.crm.properties.core_api.get_by_name(object_type=object_type, property_name=property_name, archived=False).to_dict()
     return api_response
+
+def search_list_by_name(client, list_name, additional_properties):
+    list_search_request = ListSearchRequest(query=list_name,
+                                            additional_properties=additional_properties)
+    try:
+        api_response = client.crm.lists.lists_api.do_search(list_search_request=list_search_request).to_dict()
+        return api_response
+    except ApiException as e:
+        print("Exception when calling lists_api->do_search: %s\n" % e)
+
+def create_list(client, list_name, processing_type, object_type_id, list_folder_id, filter_branch):
+    list_create_request = ListCreateRequest(object_type_id=object_type_id, processing_type=processing_type, list_folder_id=list_folder_id,
+                                            name=list_name, filter_branch=filter_branch)
+    try:
+        api_response = client.crm.lists.lists_api.create(list_create_request=list_create_request)
+    except ApiException as e:
+        print("Exception when calling lists_api->create: %s\n" % e)

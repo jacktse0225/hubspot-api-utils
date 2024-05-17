@@ -72,6 +72,7 @@ def main():
     industry_label = hubspot_api_functions.get_label_value_of_property(headers, "companies", "industry")
 
     ##Formatting
+
     title_analysis = title_analysis_formatting(contact_list, company_list, industry_label)
     company_analysis = company_analysis_formatting(company_list, industry_label)
     writer = readwrite.create_excel_writer(list_name, False, save_directory)

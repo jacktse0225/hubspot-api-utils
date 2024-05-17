@@ -27,6 +27,7 @@ def main():
     comp_title = comp_title_formatting(writer, comp_df, year_column)
     company_per_event = company_per_event_formatting(writer, paid_company, comp_company, year_column)
     attendee_per_event = attendee_per_event_formatting(writer, paid_title, comp_title, year_column)
+
     company_compilation = company_compilation_formatting(writer, ori_paid_company, comp_df)
     attendee_compilation = attendee_compilation_formatting(writer, ori_paid_title, comp_df)
     title_analysis = title_analysis_formatting(writer, attendee_compilation)
